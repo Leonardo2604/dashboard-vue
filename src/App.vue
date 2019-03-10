@@ -1,8 +1,17 @@
 <template>
-    <v-app>
+    <v-app :dark="lightValue < 30">
         <!-- mobile-break-point="768" -->
         <v-navigation-drawer app v-model="drawer">
             <v-list>
+                <v-list-tile avatar>
+                    <v-list-tile-avatar>
+                        <img src="https://randomuser.me/api/portraits/men/85.jpg">
+                    </v-list-tile-avatar>
+
+                    <v-list-tile-content>
+                        <v-list-tile-title>Leonardo R.</v-list-tile-title>
+                    </v-list-tile-content>
+                </v-list-tile>
                 <v-list-tile @click="()=> null">
                     <v-list-tile-action>
                         <v-icon>dashboard</v-icon>
@@ -42,9 +51,16 @@
                         <v-list-tile-title v-text="item"></v-list-tile-title>
                     </v-list-tile>
                 </v-list-group>
+
+                <v-list-tile @click="()=> null">
+                    <v-list-tile-action>
+                        <v-icon>exit_to_app</v-icon>
+                    </v-list-tile-action>
+                    <v-list-tile-title>Sair</v-list-tile-title>
+                </v-list-tile>
             </v-list>
         </v-navigation-drawer>
-        <v-toolbar app dark color="primary">
+        <v-toolbar app color="primary" dark>
             <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
             <v-toolbar-title>Dashboard</v-toolbar-title>
 
@@ -52,7 +68,7 @@
 
             <v-menu bottom left>
                 <template v-slot:activator="{ on }">
-                    <v-btn dark icon v-on="on">
+                    <v-btn icon v-on="on">
                         <v-icon>more_vert</v-icon>
                     </v-btn>
                 </template>
@@ -68,7 +84,7 @@
                         <v-list-tile-content>
                             <v-list-tile-title>Configurações</v-list-tile-title>
                         </v-list-tile-content>
-                        <v-list-tile-action style="text-align: right">
+                        <v-list-tile-action>
                             <v-icon>settings</v-icon>
                         </v-list-tile-action>
                     </v-list-tile>
@@ -77,14 +93,8 @@
                         <v-list-tile-content>
                             <v-list-tile-title>Sobre</v-list-tile-title>
                         </v-list-tile-content>
-                    </v-list-tile>
-
-                     <v-list-tile @click="() => null">
-                        <v-list-tile-content>
-                            <v-list-tile-title>Sair</v-list-tile-title>
-                        </v-list-tile-content>
-                        <v-list-tile-action style="text-align: right">
-                            <v-icon>exit_to_app</v-icon>
+                        <v-list-tile-action>
+                            <v-icon>help_outline</v-icon>
                         </v-list-tile-action>
                     </v-list-tile>
                 </v-list>
@@ -92,7 +102,7 @@
         </v-toolbar>
         <v-content>
             <v-container fluid>
-                <!-- <router-view></router-view> -->
+                <router-view></router-view>
             </v-container>
         </v-content>
         <v-footer app>
@@ -104,7 +114,7 @@
 </template>
 
 <script>
-    import HelloWorld from "./components/HelloWorld";
+    import HelloWorld from "./components/HelloWorld.vue";
 
     export default {
         name: "App",
@@ -113,7 +123,7 @@
         },
         data() {
             return {
-                drawer: true,
+                drawer: false,
                 register: [
                     'Produto',
                     'Categoria',
@@ -130,7 +140,8 @@
                     'Grupos',
                     'Configuração de aplicações',
                     'Logs'
-                ]
+                ],
+                lightValue: 100
             };
         }
     };
