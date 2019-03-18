@@ -1,5 +1,5 @@
 <template>
-    <v-app :dark="lightValue < 30">
+    <v-app>
         <!-- mobile-break-point="768" -->
         <v-navigation-drawer app v-model="drawer">
             <v-list>
@@ -12,7 +12,7 @@
                         <v-list-tile-title>Leonardo R.</v-list-tile-title>
                     </v-list-tile-content>
                 </v-list-tile>
-                <v-list-tile @click="()=> null">
+                <v-list-tile @click="goTo({name: 'home'})">
                     <v-list-tile-action>
                         <v-icon>dashboard</v-icon>
                     </v-list-tile-action>
@@ -89,7 +89,7 @@
                         </v-list-tile-action>
                     </v-list-tile>
 
-                    <v-list-tile @click="() => null">
+                    <v-list-tile @click="goTo({name: 'about'})">
                         <v-list-tile-content>
                             <v-list-tile-title>Sobre</v-list-tile-title>
                         </v-list-tile-content>
@@ -102,7 +102,9 @@
         </v-toolbar>
         <v-content>
             <v-container fluid>
-                <router-view></router-view>
+                <v-fade-transition mode="out-in">
+                    <router-view></router-view>
+                </v-fade-transition>
             </v-container>
         </v-content>
         <v-footer app>
@@ -114,12 +116,15 @@
 </template>
 
 <script>
-    import HelloWorld from "./components/HelloWorld.vue";
-
     export default {
         name: "App",
         components: {
-            HelloWorld
+
+        },
+        methods: {
+            goTo: function(nameRouter) {
+                this.$router.push(nameRouter);
+            }
         },
         data() {
             return {
@@ -140,8 +145,7 @@
                     'Grupos',
                     'Configuração de aplicações',
                     'Logs'
-                ],
-                lightValue: 100
+                ]
             };
         }
     };
